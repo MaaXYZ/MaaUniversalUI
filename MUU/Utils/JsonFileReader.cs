@@ -18,7 +18,7 @@ public static class JsonFileReader
             return default;
         }
 
-        using FileStream stream = File.OpenRead(filePath);
+        await using var stream = File.OpenRead(filePath);
         return await JsonSerializer.DeserializeAsync<T>(stream);
     }
 }
