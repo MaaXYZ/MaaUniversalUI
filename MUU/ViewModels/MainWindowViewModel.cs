@@ -1,28 +1,38 @@
-﻿using System.Threading.Tasks;
+﻿using System.Reactive.Concurrency;
 using ReactiveUI;
-using System.Reactive;
-using System;
 
-using MUU.Models;
+using MUU.PIModels;
 using MUU.Utils;
 
 namespace MUU.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    private ProjectInterfaceDataModel? _piData;
-    public ProjectInterfaceDataModel? PiData { get => _piData; private set => this.RaiseAndSetIfChanged(ref _piData, value); }
+    public InterfaceDataModel? PiData { get => _piData; private set => this.RaiseAndSetIfChanged(ref _piData, value); }
+    private InterfaceDataModel? _piData;
+
     public MainWindowViewModel()
     {
-        InitializeCommand = ReactiveCommand.CreateFromTask(LoadPiData);
-        InitializeCommand.Execute().Subscribe(); // 立即执行命令
+        RxApp.MainThreadScheduler.Schedule(LoadPiData);
     }
-    public ReactiveCommand<Unit, Unit> InitializeCommand { get; }
 
-    private async Task LoadPiData()
+    private const string ProjectInterfaceFilename = "interface.json";
+    private async void LoadPiData()
     {
-        PiData = await JsonFileReader.ReadAsync<ProjectInterfaceDataModel>("interface.json");
-        Greeting = PiData?.Message;
+        Logger.log.Debug("Load PiData {@ProjectInterfaceFilename}", ProjectInterfaceFilename);
+
+        PiData = await JsonFileReader.ReadAsync<InterfaceDataModel>(ProjectInterfaceFilename);
+        if (PiData == null)
+        {
+            Logger.log.Error("Falied to load PiData");
+            return;
+        }
+        Logger.log.Information("PiData: {@PiData}", PiData);
+
+        if (!string.IsNullOrEmpty(PiData.message))
+        {
+            Greeting = PiData.message;
+        }
     }
 
     public string _greeting = "Welcome to Avalonia!";

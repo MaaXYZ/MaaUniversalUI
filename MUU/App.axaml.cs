@@ -16,10 +16,14 @@ public partial class App : Application
         AvaloniaXamlLoader.Load(this);
     }
 
+
     public override void OnFrameworkInitializationCompleted()
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            desktop.Startup += OnStartup;
+            desktop.Exit += OnExit;
+
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             DisableAvaloniaDataAnnotationValidation();
@@ -43,5 +47,15 @@ public partial class App : Application
         {
             BindingPlugins.DataValidators.Remove(plugin);
         }
+    }
+
+    private void OnStartup(object? s, ControlledApplicationLifetimeStartupEventArgs e)
+    {
+        Utils.Logger.LogInit();
+    }
+
+    private void OnExit(object? s, ControlledApplicationLifetimeExitEventArgs e)
+    {
+        Utils.Logger.LogExit();
     }
 }
