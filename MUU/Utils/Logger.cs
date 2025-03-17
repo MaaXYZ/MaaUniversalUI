@@ -4,9 +4,13 @@ using System.Runtime.InteropServices;
 
 namespace MUU.Utils;
 
-public static class Logger
+public class Logger
 {
-    public static Serilog.Core.Logger log = new LoggerConfiguration()
+    public static readonly Serilog.Core.Logger Log;
+
+    static Logger()
+    {
+        Log = new LoggerConfiguration()
 #if DEBUG
         .MinimumLevel.Verbose()
 #else
@@ -19,21 +23,17 @@ public static class Logger
             retainedFileCountLimit: 7)
         .CreateLogger();
 
-    public static void LogInit()
-    {
-        log.Debug("-----------------------------");
-        log.Debug("MUU Process Start");
-        log.Debug("{@arch} {@os}", RuntimeInformation.OSArchitecture, RuntimeInformation.OSDescription);
-        log.Debug("Working {@working}", Directory.GetCurrentDirectory());
-        log.Debug("Logging {@filename}", _filename);
-        log.Debug("-----------------------------");
+        LogInit();
     }
 
-    public static void LogExit()
+    public static void LogInit()
     {
-        log.Debug("-----------------------------");
-        log.Debug("Close log");
-        log.Debug("-----------------------------");
+        Log.Debug("-----------------------------");
+        Log.Debug("MUU Process Start");
+        Log.Debug("{@arch} {@os}", RuntimeInformation.OSArchitecture, RuntimeInformation.OSDescription);
+        Log.Debug("Working {@working}", Directory.GetCurrentDirectory());
+        Log.Debug("Logging {@filename}", _filename);
+        Log.Debug("-----------------------------");
     }
 
     private const string _filename = "./debug/muu.log";

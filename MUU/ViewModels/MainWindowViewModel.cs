@@ -19,15 +19,15 @@ public partial class MainWindowViewModel : ViewModelBase
     private const string ProjectInterfaceFilename = "interface.json";
     private async void LoadPiData()
     {
-        Logger.log.Debug("Load PiData {@ProjectInterfaceFilename}", ProjectInterfaceFilename);
+        Logger.Log.Debug("Load PiData {@ProjectInterfaceFilename}", ProjectInterfaceFilename);
 
         PiData = await JsonFileReader.ReadAsync<InterfaceDataModel>(ProjectInterfaceFilename);
         if (PiData == null)
         {
-            Logger.log.Error("Falied to load PiData");
+            Logger.Log.Error("Falied to load PiData");
             return;
         }
-        Logger.log.Information("PiData: {@PiData}", PiData);
+        Logger.Log.Information("PiData: {@PiData}", PiData);
 
         if (!string.IsNullOrEmpty(PiData.message))
         {
