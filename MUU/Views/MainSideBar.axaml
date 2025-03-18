@@ -4,9 +4,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:MUU.ViewModels"
     d:DesignHeight="450"
     d:DesignWidth="80"
+    x:DataType="vm:MainWindowViewModel"
     mc:Ignorable="d">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
     <Grid RowDefinitions="*,Auto">
         <!--  顶部按钮区域  -->
         <StackPanel
@@ -20,7 +27,8 @@
                 VerticalContentAlignment="Center"
                 Background="Transparent"
                 BorderThickness="0"
-                CommandParameter="Home">
+                Command="{Binding NavigateCommand}"
+                CommandParameter="Tasker">
                 <StackPanel Orientation="Vertical" Spacing="5">
                     <TextBlock FontSize="20" Text="📋" />
                     <TextBlock FontSize="12" Text="任务" />
@@ -34,7 +42,23 @@
                 VerticalContentAlignment="Center"
                 Background="Transparent"
                 BorderThickness="0"
-                CommandParameter="Configure">
+                Command="{Binding NavigateCommand}"
+                CommandParameter="Connection">
+                <StackPanel Orientation="Vertical" Spacing="5">
+                    <TextBlock FontSize="20" Text="📡" />
+                    <TextBlock FontSize="12" Text="连接" />
+                </StackPanel>
+            </Button>
+
+            <Button
+                Width="80"
+                Height="60"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Background="Transparent"
+                BorderThickness="0"
+                Command="{Binding NavigateCommand}"
+                CommandParameter="Configuration">
                 <StackPanel Orientation="Vertical" Spacing="5">
                     <TextBlock FontSize="20" Text="🛠️" />
                     <TextBlock FontSize="12" Text="配置" />
@@ -55,6 +79,7 @@
                 VerticalContentAlignment="Center"
                 Background="Transparent"
                 BorderThickness="0"
+                Command="{Binding NavigateCommand}"
                 CommandParameter="Help">
                 <StackPanel Orientation="Vertical" Spacing="5">
                     <TextBlock FontSize="20" Text="💭" />
@@ -69,6 +94,7 @@
                 VerticalContentAlignment="Center"
                 Background="Transparent"
                 BorderThickness="0"
+                Command="{Binding NavigateCommand}"
                 CommandParameter="Settings">
                 <StackPanel Orientation="Vertical" Spacing="5">
                     <TextBlock FontSize="20" Text="⚙️" />

@@ -1,47 +1,46 @@
 ﻿using System.Reactive.Concurrency;
+using System.Reactive;
+using System.Collections.Generic;
 using ReactiveUI;
 
 using MUU.PIModels;
 using MUU.Utils;
+using Tmds.DBus.Protocol;
 using Serilog;
-using System;
 
 namespace MUU.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    public InterfaceDataModel? PiData { get => _piData; private set => this.RaiseAndSetIfChanged(ref _piData, value); }
-    private InterfaceDataModel? _piData;
-
     public MainWindowViewModel()
     {
-        RxApp.MainThreadScheduler.Schedule(LoadPiData);
+        _pages = new Dictionary<string, object> {
+            {"Tasker", new TaskerViewModel()},
+            {"Connection", new ConnectionViewModel()},
+            {"Configuration", new ConfigurationViewModel()},
+            {"Help", new HelpViewModel()},
+            {"Settings", new SettingsViewModel()},
+        };
+        _currentPage = _pages["Tasker"];
+
+        NavigateCommand = ReactiveCommand.Create<string>(Navigate);
     }
 
-    private const string ProjectInterfaceFilename = "interface.json";
-    private async void LoadPiData()
+    private Dictionary<string, object> _pages;
+
+    private object _currentPage;
+
+    public object CurrentPage
     {
-        Logger.Log.Debug("Load PiData: {filename}", ProjectInterfaceFilename);
-        PiData = await JsonFileReader.ReadAsync<InterfaceDataModel>(ProjectInterfaceFilename);
-        Logger.Log.Information("PiData: {@data}", PiData);
-
-        UpdateView();
+        get => _currentPage;
+        set => this.RaiseAndSetIfChanged(ref _currentPage, value);
     }
+    public ReactiveCommand<string, Unit> NavigateCommand { get; }
 
-    private void UpdateView()
+
+    private void Navigate(string page)
     {
-        if (PiData == null)
-        {
-            Logger.Log.Error("PiData is null");
-            return;
-        }
-
-        if (!string.IsNullOrEmpty(PiData.message))
-        {
-            Greeting = PiData.message;
-        }
+        Logger.Log.Debug("onclick {page}", page);
+        // CurrentPage = _pages[page];
     }
-
-    public string _greeting = "Welcome to Avalonia!";
-    public string Greeting { get => _greeting; private set => this.RaiseAndSetIfChanged(ref _greeting, value); }
 }

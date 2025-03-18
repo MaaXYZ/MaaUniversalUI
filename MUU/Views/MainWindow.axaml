@@ -29,12 +29,9 @@
         <SplitView.Pane>
             <views:MainSideBar />
         </SplitView.Pane>
-        <Grid>
-            <TextBlock
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Text="{Binding Greeting}" />
-        </Grid>
+
+        <ContentControl Content="{Binding CurrentPage}"/>
+        
     </SplitView>
 
 </Window>
