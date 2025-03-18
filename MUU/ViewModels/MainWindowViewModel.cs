@@ -1,32 +1,35 @@
-﻿using System.Reactive.Concurrency;
-using System.Reactive;
+﻿using System;
 using System.Collections.Generic;
 using ReactiveUI;
 
-using MUU.PIModels;
 using MUU.Utils;
-using Tmds.DBus.Protocol;
-using Serilog;
 
 namespace MUU.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    public MainWindowViewModel()
+    public enum MainPage
     {
-        _pages = new Dictionary<string, object> {
-            {"Tasker", new TaskerViewModel()},
-            {"Connection", new ConnectionViewModel()},
-            {"Configuration", new ConfigurationViewModel()},
-            {"Help", new HelpViewModel()},
-            {"Settings", new SettingsViewModel()},
-        };
-        _currentPage = _pages["Tasker"];
-
-        NavigateCommand = ReactiveCommand.Create<string>(Navigate);
+        Tasker,
+        Connection,
+        Configuration,
+        Help,
+        Settings
     }
 
-    private Dictionary<string, object> _pages;
+    public MainWindowViewModel()
+    {
+        _pages = new Dictionary<MainPage, object> {
+            {MainPage.Tasker, new TaskerViewModel()},
+            {MainPage.Connection, new ConnectionViewModel()},
+            {MainPage.Configuration, new ConfigurationViewModel()},
+            {MainPage.Help, new HelpViewModel()},
+            {MainPage.Settings, new SettingsViewModel()},
+        };
+        _currentPage = _pages[MainPage.Tasker];
+    }
+
+    private Dictionary<MainPage, object> _pages;
 
     private object _currentPage;
 
@@ -35,12 +38,21 @@ public partial class MainWindowViewModel : ViewModelBase
         get => _currentPage;
         set => this.RaiseAndSetIfChanged(ref _currentPage, value);
     }
-    public ReactiveCommand<string, Unit> NavigateCommand { get; }
 
-
-    private void Navigate(string page)
+    // only for Views
+    public void NavigateByName(string pageName)
     {
-        Logger.Log.Debug("onclick {page}", page);
-        // CurrentPage = _pages[page];
+        if (!Enum.TryParse(pageName, out MainPage page))
+        {
+            Logger.log.Error("Invalid page name: {pageName}", pageName);
+            throw new ArgumentException("Invalid page name", nameof(pageName));
+        }
+
+        Navigate(page);
+    }
+
+    public void Navigate(MainPage page)
+    {
+        CurrentPage = _pages[page];
     }
 }

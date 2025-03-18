@@ -20,13 +20,13 @@ class TaskerViewModel : ViewModelBase
     private const string ProjectInterfaceFilename = "interface.json";
     private async void LoadPiData()
     {
-        Logger.Log.Debug("Load PiData: {filename}", ProjectInterfaceFilename);
+        Logger.log.Debug("Load PiData: {filename}", ProjectInterfaceFilename);
         PiData = await JsonFileReader.ReadAsync<InterfaceDataModel>(ProjectInterfaceFilename);
-        Logger.Log.Information("PiData: {@data}", PiData);
+        Logger.log.Information("PiData: {@data}", PiData);
 
         if (PiData == null)
         {
-            Logger.Log.Error("PiData is null");
+            Logger.log.Error("PiData is null");
             return;
         }
 
