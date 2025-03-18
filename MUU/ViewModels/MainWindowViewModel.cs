@@ -3,6 +3,8 @@ using ReactiveUI;
 
 using MUU.PIModels;
 using MUU.Utils;
+using Serilog;
+using System;
 
 namespace MUU.ViewModels;
 
@@ -19,15 +21,20 @@ public partial class MainWindowViewModel : ViewModelBase
     private const string ProjectInterfaceFilename = "interface.json";
     private async void LoadPiData()
     {
-        Logger.Log.Debug("Load PiData {@ProjectInterfaceFilename}", ProjectInterfaceFilename);
-
+        Logger.Log.Debug("Load PiData: {filename}", ProjectInterfaceFilename);
         PiData = await JsonFileReader.ReadAsync<InterfaceDataModel>(ProjectInterfaceFilename);
+        Logger.Log.Information("PiData: {@data}", PiData);
+
+        UpdateView();
+    }
+
+    private void UpdateView()
+    {
         if (PiData == null)
         {
-            Logger.Log.Error("Falied to load PiData");
+            Logger.Log.Error("PiData is null");
             return;
         }
-        Logger.Log.Information("PiData: {@PiData}", PiData);
 
         if (!string.IsNullOrEmpty(PiData.message))
         {

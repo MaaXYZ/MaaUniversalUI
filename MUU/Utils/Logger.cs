@@ -37,9 +37,9 @@ public class Logger
     {
         Log.Debug("-----------------------------");
         Log.Debug("MUU Process Start");
-        Log.Debug("{@arch} {@os}", RuntimeInformation.OSArchitecture, RuntimeInformation.OSDescription);
-        Log.Debug("Working {@working}", Directory.GetCurrentDirectory());
-        Log.Debug("Logging {@filename}", _filename);
+        Log.Debug("{arch} {os}", RuntimeInformation.OSArchitecture, RuntimeInformation.OSDescription);
+        Log.Debug("Working {curDir}", Directory.GetCurrentDirectory());
+        Log.Debug("Logging {logFile}", _filename);
         Log.Debug("-----------------------------");
     }
 
