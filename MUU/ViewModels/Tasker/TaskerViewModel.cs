@@ -14,14 +14,14 @@ class TaskerViewModel : ViewModelBase
         RxApp.MainThreadScheduler.Schedule(LoadPiData);
     }
 
-    public InterfaceDataModel? PiData { get => _piData; private set => this.RaiseAndSetIfChanged(ref _piData, value); }
-    private InterfaceDataModel? _piData;
+    public InterfaceData? PiData { get => _piData; private set => this.RaiseAndSetIfChanged(ref _piData, value); }
+    private InterfaceData? _piData;
 
-    private const string ProjectInterfaceFilename = "interface.json";
+    private const string _piFilename = "interface.json";
     private async void LoadPiData()
     {
-        Logger.log.Debug("Load PiData: {filename}", ProjectInterfaceFilename);
-        PiData = await JsonFileReader.ReadAsync<InterfaceDataModel>(ProjectInterfaceFilename);
+        Logger.log.Debug("Load PiData: {filename}", _piFilename);
+        PiData = await JsonFileReader.ReadAsync<InterfaceData>(_piFilename);
         Logger.log.Information("PiData: {@data}", PiData);
 
         if (PiData == null)
@@ -36,6 +36,6 @@ class TaskerViewModel : ViewModelBase
         }
     }
 
-    public string _greeting = "Tasker Page";
+    public string _greeting = "Hello MUU!";
     public string Greeting { get => _greeting; private set => this.RaiseAndSetIfChanged(ref _greeting, value); }
 }

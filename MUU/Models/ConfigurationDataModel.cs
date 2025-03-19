@@ -3,19 +3,19 @@ using System.Text.Json.Serialization;
 
 namespace MUU.ConfModels;
 
-public class ConfigurationDataModel
+public class Configuration
 {
-
-    // [JsonPropertyName("version")]
-    public string? version { get; set; }
-
-    public string? message { get; set; }
-
-    public required List<TaskDataModel> task { get; set; }
+    public required List<Task> task { get; set; }
 }
 
-public class TaskDataModel
+public class Option
 {
     public required string name { get; set; }
-    public required string entry { get; set; }
+    public required string value { get; set; }
+}
+
+public class Task
+{
+    public required string name { get; set; }
+    public List<Option>? option { get; set; }
 }

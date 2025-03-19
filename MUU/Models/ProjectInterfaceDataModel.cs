@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace MUU.PIModels;
 
-public class InterfaceDataModel
+public class InterfaceData
 {
 
     // [JsonPropertyName("version")]
@@ -11,10 +11,10 @@ public class InterfaceDataModel
 
     public string? message { get; set; }
 
-    public required List<TaskDataModel> task { get; set; }
+    public required List<Task> task { get; set; }
 }
 
-public class TaskDataModel
+public class Task
 {
     public required string name { get; set; }
     public required string entry { get; set; }
