@@ -11,10 +11,10 @@ public class InterfaceData
 
     public string? message { get; set; }
 
-    public required List<Task> task { get; set; }
+    public required List<PiTask> task { get; set; }
 }
 
-public class Task
+public class PiTask
 {
     public required string name { get; set; }
     public required string entry { get; set; }

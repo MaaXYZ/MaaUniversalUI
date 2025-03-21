@@ -4,7 +4,7 @@ using System.IO;
 
 namespace MUU.Utils;
 
-public static class JsonFileReader
+public static class JsonFileSerializer
 {
     public static async Task<T?> ReadAsync<T>(string filePath)
     {
@@ -20,5 +20,16 @@ public static class JsonFileReader
 
         await using var stream = File.OpenRead(filePath);
         return await JsonSerializer.DeserializeAsync<T>(stream);
+    }
+
+    public static async Task WriteAsync<T>(string filePath, T value)
+    {
+        var dir = Path.GetDirectoryName(filePath);
+        if (dir != null && !Directory.Exists(dir))
+        {
+            Directory.CreateDirectory(dir);
+        }
+        await using FileStream createStream = File.Create(filePath);
+        await JsonSerializer.SerializeAsync(createStream, value);
     }
 }
