@@ -61,17 +61,17 @@ class ConfigurationViewModel : ViewModelBase
     }
 
 
-    public InterfaceData? PiData { get => _piData; private set => this.RaiseAndSetIfChanged(ref _piData, value); }
+    public InterfaceData? PiData { get => _piData; }
     private InterfaceData? _piData;
 
     private const string _piFilename = "interface.json";
     private async Task<bool> LoadPiData()
     {
         Logger.log.Debug("Load PiData: {filename}", _piFilename);
-        PiData = await JsonFileSerializer.ReadAsync<InterfaceData>(_piFilename);
-        Logger.log.Information("PiData: {@data}", PiData);
+        _piData = await JsonFileSerializer.ReadAsync<InterfaceData>(_piFilename);
+        Logger.log.Information("PiData: {@data}", _piData);
 
-        if (PiData == null)
+        if (_piData == null)
         {
             Logger.log.Error("PiData is null");
             Greeting = $"Failed to load {_piFilename}";
