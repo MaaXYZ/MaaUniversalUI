@@ -15,10 +15,31 @@
         <vm:TaskerViewModel />
     </Design.DataContext>
 
-    <TextBlock
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        FontSize="24"
-        Text="{Binding Greeting}" />
+    <Grid Margin="10" ColumnDefinitions="2*,1*">
+        <!--  左侧任务列表  -->
+        <ListBox
+            Grid.Column="0"
+            Margin="10"
+            Background="Transparent"
+            ItemsSource="{Binding TaskItems}"
+            ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Button
+                        Margin="0,5"
+                        HorizontalAlignment="Stretch"
+                        Background="Transparent"
+                        >
+                        <Button.Content>
+                            <StackPanel>
+                                <!-- <Image Source="..." /> -->
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
 
 </UserControl>

@@ -7,7 +7,7 @@ using System.Reactive;
 
 namespace MUU.ViewModels;
 
-class ConnectionViewModel : ViewModelBase
+public class ConnectionViewModel : ViewModelBase
 {
     public string _greeting = "Connection Page";
     public string Greeting { get => _greeting; private set => this.RaiseAndSetIfChanged(ref _greeting, value); }

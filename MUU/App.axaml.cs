@@ -14,12 +14,12 @@ public static class ServiceCollectionExtensions
 {
     public static void AddCommonServices(this IServiceCollection collection)
     {
-        collection.AddTransient<MainWindowViewModel>();
-        collection.AddTransient<TaskerViewModel>();
-        collection.AddTransient<ConnectionViewModel>();
-        collection.AddTransient<ConfigurationViewModel>();
-        collection.AddTransient<HelpViewModel>();
-        collection.AddTransient<SettingsViewModel>();
+        collection.AddSingleton<MainWindowViewModel>();
+        collection.AddSingleton<TaskerViewModel>();
+        collection.AddSingleton<ConnectionViewModel>();
+        collection.AddSingleton<ConfigurationViewModel>();
+        collection.AddSingleton<HelpViewModel>();
+        collection.AddSingleton<SettingsViewModel>();
     }
 }
 

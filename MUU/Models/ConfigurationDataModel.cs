@@ -32,6 +32,8 @@ public class Option
 
 public class ConfTask
 {
-    public required string name { get; set; }
+    public required string piName { get; set; }
+    public string customName { get; set; } = string.Empty;
+    public bool enable { get; set; } = true;
     public List<Option>? option { get; set; }
 }

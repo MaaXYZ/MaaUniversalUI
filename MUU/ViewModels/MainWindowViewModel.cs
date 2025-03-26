@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ReactiveUI;
 
 using MUU.Utils;
+using MUU.Views;
 
 namespace MUU.ViewModels;
 
@@ -17,14 +18,14 @@ public partial class MainWindowViewModel : ViewModelBase
         Settings
     }
 
-    public MainWindowViewModel()
+    public MainWindowViewModel(TaskerViewModel taskerVM, ConnectionViewModel connectionVM, ConfigurationViewModel configurationVM, HelpViewModel helpVM, SettingsViewModel settingsVM)
     {
         _pages = new Dictionary<MainPage, object> {
-            {MainPage.Tasker, new TaskerViewModel()},
-            {MainPage.Connection, new ConnectionViewModel()},
-            {MainPage.Configuration, new ConfigurationViewModel()},
-            {MainPage.Help, new HelpViewModel()},
-            {MainPage.Settings, new SettingsViewModel()},
+            {MainPage.Tasker, taskerVM},
+            {MainPage.Connection, connectionVM},
+            {MainPage.Configuration, configurationVM},
+            {MainPage.Help, helpVM},
+            {MainPage.Settings, settingsVM},
         };
         _currentPage = _pages[MainPage.Tasker];
     }

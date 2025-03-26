@@ -9,7 +9,15 @@ using System.Threading.Tasks;
 
 namespace MUU.ViewModels;
 
-class ConfigurationViewModel : ViewModelBase
+public class CurrentTaskConfigChanged
+{
+    // public required TaskConfig oldConfig;
+
+    public required string configName;
+    public required TaskConfig newConfig;
+}
+
+public class ConfigurationViewModel : ViewModelBase
 {
     public ConfigurationViewModel()
     {
@@ -26,13 +34,23 @@ class ConfigurationViewModel : ViewModelBase
         get => _config; private set
         {
             this.RaiseAndSetIfChanged(ref _config, value);
+
+            NotifyCurrentTaskConfigChanged();
+
             RxApp.MainThreadScheduler.Schedule(SaveConfig);
         }
     }
+
+    private void NotifyCurrentTaskConfigChanged()
+    {
+        MessageBus.Current.SendMessage(new CurrentTaskConfigChanged { configName = Config.current, newConfig = CurrentTaskConfig() });
+
+    }
+
     private Configuration _config = new Configuration
     {
         current = _defaultConfigName,
-        allTaskConfig = new Dictionary<string, TaskConfig> { { _defaultConfigName, new TaskConfig { tasks = new List<ConfModels.ConfTask>(), } } },
+        allTaskConfig = new Dictionary<string, TaskConfig> { { _defaultConfigName, new TaskConfig { tasks = new List<ConfTask>(), } } },
         timer = new Dictionary<string, TimerConfig>(),
     };
 
@@ -44,14 +62,15 @@ class ConfigurationViewModel : ViewModelBase
         var conf = await JsonFileSerializer.ReadAsync<Configuration>(_configFilename);
         Logger.log.Information("Config: {@data}", conf);
 
-        if (conf == null)
+        if (conf == null) // first time use
         {
-            // first time use
             Logger.log.Information("Config is null, first time use");
-            SaveConfig();
-            return;
+            Config = _config;
         }
-        _config = conf;
+        else
+        {
+            Config = conf;
+        }
     }
 
     private async void SaveConfig()
