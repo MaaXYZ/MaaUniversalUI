@@ -1,10 +1,9 @@
-using System.Reactive.Concurrency;
-using ReactiveUI;
-
+using MUU.ConfModels;
 using MUU.PIModels;
 using MUU.Utils;
-using MUU.ConfModels;
+using ReactiveUI;
 using System.Collections.Generic;
+using System.Reactive.Concurrency;
 using System.Threading.Tasks;
 
 namespace MUU.ViewModels;
@@ -13,8 +12,8 @@ public class CurrentTaskConfigChanged
 {
     // public required TaskConfig oldConfig;
 
-    public required string configName;
-    public required TaskConfig newConfig;
+    public string configName;
+    public TaskConfig newConfig;
 }
 
 public class ConfigurationViewModel : ViewModelBase
@@ -44,18 +43,18 @@ public class ConfigurationViewModel : ViewModelBase
     private void NotifyCurrentTaskConfigChanged()
     {
         MessageBus.Current.SendMessage(new CurrentTaskConfigChanged { configName = Config.current, newConfig = CurrentTaskConfig() });
-
     }
 
     private Configuration _config = new Configuration
     {
         current = _defaultConfigName,
-        allTaskConfig = new Dictionary<string, TaskConfig> { { _defaultConfigName, new TaskConfig { tasks = new List<ConfTask>(), } } },
-        timer = new Dictionary<string, TimerConfig>(),
+        allTaskConfig = new Dictionary<string, TaskConfig> { { _defaultConfigName, new TaskConfig { tasks = [], } } },
+        timer = [],
     };
 
     private const string _configFilename = "config/muu_config.json";
     private const string _defaultConfigName = "Default";
+
     private async Task LoadConfig()
     {
         Logger.log.Debug("Load Configuration: {filename}", _configFilename);
@@ -79,11 +78,11 @@ public class ConfigurationViewModel : ViewModelBase
         await JsonFileSerializer.WriteAsync(_configFilename, Config);
     }
 
-
     public InterfaceData? PiData { get => _piData; }
     private InterfaceData? _piData;
 
     private const string _piFilename = "interface.json";
+
     private async Task<bool> LoadPiData()
     {
         Logger.log.Debug("Load PiData: {filename}", _piFilename);

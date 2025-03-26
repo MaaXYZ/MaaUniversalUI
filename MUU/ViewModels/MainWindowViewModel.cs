@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MUU.Utils;
 using ReactiveUI;
-
-using MUU.Utils;
-using MUU.Views;
+using System;
+using System.Collections.Generic;
 
 namespace MUU.ViewModels;
 

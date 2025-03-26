@@ -1,8 +1,8 @@
+using Serilog;
+using Serilog.Enrichers.CallerInfo;
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using Serilog;
-using Serilog.Enrichers.CallerInfo;
 
 namespace MUU.Utils;
 
