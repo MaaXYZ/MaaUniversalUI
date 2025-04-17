@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MUU.ConfModels;
+namespace MUU.Models;
 
 public class Configuration
 {

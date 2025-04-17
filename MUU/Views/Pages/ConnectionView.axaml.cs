@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace MUU.Views;
+namespace MUU.Views.Pages;
 
 public partial class ConnectionView : UserControl
 {

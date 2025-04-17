@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace MUU.PIModels;
+namespace MUU.Models;
 
 public class InterfaceData
 {

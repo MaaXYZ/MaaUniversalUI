@@ -4,6 +4,7 @@ using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using MUU.ViewModels;
+using MUU.ViewModels.Pages;
 using MUU.Views;
 using System.Linq;
 

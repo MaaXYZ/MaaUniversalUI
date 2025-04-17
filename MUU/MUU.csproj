@@ -11,10 +11,6 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
-    <Folder Include="Views\Configuration\" />
-    <Folder Include="Views\Connection\" />
-    <Folder Include="Views\Help\" />
-    <Folder Include="Views\Settings\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,5 +30,28 @@
     <PackageReference Include="Serilog.Enrichers.CallerInfo" Version="1.0.5" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Pages\HelpView.axaml.cs">
+      <DependentUpon>HelpView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Pages\SettingsView.axaml.cs">
+      <DependentUpon>SettingsView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Pages\ConfigurationView.axaml.cs">
+      <DependentUpon>ConfigurationView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Pages\ConnectionView.axaml.cs">
+      <DependentUpon>ConnectionView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Pages\TaskerView.axaml.cs">
+      <DependentUpon>TaskerView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

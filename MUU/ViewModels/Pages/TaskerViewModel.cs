@@ -1,15 +1,14 @@
 using System.Reactive.Concurrency;
 using ReactiveUI;
 
-using MUU.PIModels;
+using MUU.Models;
 using MUU.Utils;
 using System.Reactive;
 using System;
-using MUU.ConfModels;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace MUU.ViewModels;
+namespace MUU.ViewModels.Pages;
 
 public class TaskerViewModel : ViewModelBase, IDisposable
 {

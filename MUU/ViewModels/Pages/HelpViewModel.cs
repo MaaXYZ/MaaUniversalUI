@@ -1,9 +1,9 @@
 using ReactiveUI;
 
-namespace MUU.ViewModels;
+namespace MUU.ViewModels.Pages;
 
-public class ConnectionViewModel : ViewModelBase
+public class HelpViewModel : ViewModelBase
 {
-    public string _greeting = "Connection Page";
+    public string _greeting = "Help Page";
     public string Greeting { get => _greeting; private set => this.RaiseAndSetIfChanged(ref _greeting, value); }
 }

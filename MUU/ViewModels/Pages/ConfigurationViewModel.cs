@@ -1,12 +1,11 @@
-using MUU.ConfModels;
-using MUU.PIModels;
+using MUU.Models;
 using MUU.Utils;
 using ReactiveUI;
 using System.Collections.Generic;
 using System.Reactive.Concurrency;
 using System.Threading.Tasks;
 
-namespace MUU.ViewModels;
+namespace MUU.ViewModels.Pages;
 
 public class CurrentTaskConfigChanged
 {
